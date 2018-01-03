@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const view = require("./view");
 const app = express();
 
-const news = [
+const posts = [
   { id: 1, upvotes: 257, title: "Fianto Duri, the complete tutorial", body: "Fianto Duri is a charm that was created to be combined with protective spells (Can be used with another person's shield spell)(When used on something else creates a explosion). As we already knows the (i.e.) Shield Charm needs the caster to stay focused on the spell in order to continue protecting him, so Fianto Duri allows the caster to keep a charm “alive” while he does some other work or casts some other spells.", author: "RubeusH", date: new Date(Date.now() - 15000000) },
   { id: 2, upvotes: 221, title: "Untransfiguration classes to become compulsory at Hogwarts", body: "Learning untransfiguration is going to be mandatory at Hogwarts School of Witchcraft and Wizardry from 2017 onward. Untransfiguration will be covered in beginner-level spellbooks such as A Beginner's Guide to Transfiguration. Failure to at least attempt to untranfigure a wrongly-done transfiguration will be considered irresponsible.", author: "Baddock", date: new Date(Date.now() - 90000000) },
   { id: 3, upvotes: 198, title: "Cracking the Aurologist Interview", body: "Now in the 5th edition, Cracking the Aurologist Interview gives you the interview preparation you need to get the top aura study jobs. The book is over 500 pages and includes 150 aurologist interview questions and answers, as well as other advice.", author: "Hetty", date: new Date(Date.now() - 900000) },
@@ -26,25 +26,23 @@ app.use(express.static(__dirname + "/public"));
 
 app.get("/", (req, res) => {
   res.send(
-    view(
-      news.map(post => `
-        <div class='news-item'>
-          <p>
-            <span class="news-position">${post.id}. ▲</span>
-            <a href="/posts/${post.id}">${post.title}</a>
-            <small>(by ${post.author})</small>
-          </p>
-          <small class="news-info">
-            ${post.upvotes} upvotes | ${timeAgo(post.date)}
-          </small>
-        </div>`
-      ).join("")
-    )
+    view(posts.map(post => `
+      <div class='news-item'>
+        <p>
+          <span class="news-position">${post.id}. ▲</span>
+          <a href="/posts/${post.id}">${post.title}</a>
+          <small>(by ${post.author})</small>
+        </p>
+        <small class="news-info">
+          ${post.upvotes} upvotes | ${timeAgo(post.date)}
+        </small>
+      </div>`
+    ).join(""))
   );
 });
 
 app.get("/posts/:id", (req, res) => {
-  const post = news.find(post => post.id === +req.params.id);
+  const post = posts.find(post => post.id === +req.params.id);
   res.send(
     view(`<div class='news-item'>
       <p>
