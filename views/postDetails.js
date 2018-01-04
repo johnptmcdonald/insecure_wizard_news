@@ -16,7 +16,7 @@ module.exports = (post) => `<!DOCTYPE html>
         })</small>
       </p>
       <small class="news-info">
-        ${post.upvotes} upvotes | ${post.date}
+        ${post.upvotes} upvotes | ${timeAgo(post.date)}
       </small>
       <p class="news-info">${post.body}</p>
     </div>
