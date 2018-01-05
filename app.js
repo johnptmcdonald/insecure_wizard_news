@@ -9,7 +9,7 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.static(__dirname + "/public"));
 
-const baseQuery = "SELECT posts.*, users.name FROM posts INNER JOIN users ON users.id = posts.user_id\n";
+const baseQuery = "SELECT posts.*, users.name AS author FROM posts INNER JOIN users ON users.id = posts.user_id\n";
 
 
 app.get("/", async (req, res) => {

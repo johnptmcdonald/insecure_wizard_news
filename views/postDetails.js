@@ -12,7 +12,7 @@ module.exports = (post) => `<!DOCTYPE html>
       <div class='news-item'>
       <p>
         <span class="news-position">${post.id}. ▲</span> ${post.title} <small>(by ${
-          post.name
+          post.author
         })</small>
       </p>
       <small class="news-info">
