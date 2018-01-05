@@ -1,6 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
-const postBank = require("./postBank");
+const client = require("./db");
 const postList = require("./views/postList");
 const postDetails = require("./views/postDetails");
 
@@ -9,14 +9,28 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.static(__dirname + "/public"));
 
-app.get("/", (req, res) => {
-  const posts = postBank.list();
-  res.send(postList(posts));
+const baseQuery = "SELECT posts.*, users.name FROM posts INNER JOIN users ON users.id = posts.user_id\n";
+
+
+app.get("/", async (req, res) => {
+  try {
+    const data = await client.query(baseQuery);
+    res.send(postList(data.rows));  
+  } catch (error) {
+    
+    res.status(500).send(`Something went wrong: ${error}`);
+  }
 });
 
-app.get("/posts/:id", (req, res) => {
-  const post = postBank.find(req.params.id);
-  res.send(postDetails(post));
+app.get("/posts/:id", async (req, res) => {
+  try {
+    const data = await client.query(baseQuery + "WHERE posts.id = $1", [req.params.id])
+    const post = data.rows[0];
+    res.send(postDetails(post));  
+  } catch (error) {
+    console.error(error)
+    res.status(500).send(`Something went wrong: ${error}`);
+  }
 });
 
 const PORT = 1337;
