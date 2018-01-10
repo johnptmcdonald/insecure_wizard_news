@@ -1,6 +1,7 @@
 const timeAgo = require("node-time-ago");
+const html = require("html-template-tag");
 
-module.exports = (post) => `<!DOCTYPE html>
+module.exports = (post) => html`<!DOCTYPE html>
 <html>
 <head>
   <title>Wizard News</title>
