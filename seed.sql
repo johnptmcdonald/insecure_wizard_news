@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS upvotes;
-DROP TABLE users, posts;
+DROP TABLE IF EXISTS users, posts;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
