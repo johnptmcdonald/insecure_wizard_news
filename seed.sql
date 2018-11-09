@@ -1,4 +1,18 @@
-TRUNCATE TABLE users, posts;
+DROP TABLE IF EXISTS upvotes;
+DROP TABLE IF EXISTS users, posts;
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name TEXT DEFAULT NULL
+);
+
+CREATE TABLE posts (
+  id SERIAL PRIMARY KEY,
+  userId INTEGER REFERENCES users(id) NOT NULL,
+  title varchar(255) DEFAULT NULL,
+  content TEXT DEFAULT NULL,
+  date timestamp DEFAULT now()
+);
 
 INSERT INTO users (name) VALUES ('RubeusH');
 INSERT INTO users (name) VALUES ('Baddock');
@@ -29,4 +43,3 @@ INSERT INTO posts (userId, title, content, date) VALUES ((SELECT id from users w
 INSERT INTO posts (userId, title, content, date) VALUES ((SELECT id from users where name='Bellatrix1'), 'Do you still use Alarte Ascendare?', 'You''ve got levicorpus and Ascendio and wingardium leviosa, so is anyone still using Alarte Ascendare, too? (That is, unless you find wingardium leviosa too difficult to pronounce.)', (now() - interval '30 seconds'));
 INSERT INTO posts (userId, title, content, date) VALUES ((SELECT id from users where name='Dracod'), 'Mailing lists WN readers ought to know about?', 'I love to subscribe to information feeds through mailing list subscription. What do you subscribe to that you think others would benefit by if they were to as well?', (now() - interval '1 minute'));
 INSERT INTO posts (userId, title, content, date) VALUES ((SELECT id from users where name='Lupin'), 'How to tell which spell used on a bug?', 'Question: Are ther any non-jinx incantations available to detect which spell used on a bug?', (now()));
-
