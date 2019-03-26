@@ -22,7 +22,9 @@ router.get("/add", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    let userData = await client.query('SELECT * FROM users WHERE users.name = $1', [req.body.name]);
+    str = `SELECT * FROM users WHERE users.name = '${req.body.name}'`
+    console.log(str)
+    let userData = await client.query(str);
 
     if(!userData.rows.length) {
       userData = await client.query('INSERT INTO users (name) VALUES ($1) RETURNING *', [req.body.name]);
