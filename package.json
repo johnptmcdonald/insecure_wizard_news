@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "seed": "psql -d wnews -a -f ./seed.sql && psql -d wnews -a -f ./upvotes_seed.sql"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +14,11 @@
     "nodemon": "^1.14.7"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "html-template-tag": "^1.0.0",
     "morgan": "^1.9.0",
-    "node-time-ago": "^1.0.0"
+    "node-time-ago": "^1.0.0",
+    "pg": "^7.4.0"
   }
 }
